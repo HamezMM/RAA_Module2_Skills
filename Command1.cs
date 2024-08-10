@@ -74,10 +74,10 @@ namespace RAA_Module2_Skills
                         switch (currentStyle.Name)
                         {
                             case "A-GLAZ":
-                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Storefront wall").Id, false);
+                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Storefront wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
                                 break;
                             case "A-WALL":
-                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Generic 8 wall").Id, false);
+                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Generic 8 wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
                                 break;
                             case "M-DUCT":
                                 Duct.Create(doc, GetMEPSystemTypeByName(doc, "Supply Air").Id, GetDuctTypeByName(doc, "Default Duct").Id, GetLevelByName(doc, "Level 1").Id, startPoint, endPoint);
@@ -99,6 +99,8 @@ namespace RAA_Module2_Skills
         internal WallType GetWallTypeByName(Document doc,
                                             string wallName)
         {
+            WallType returnValue = null;
+            
             FilteredElementCollector wallTypes = new FilteredElementCollector(doc);
             wallTypes.OfClass(typeof(WallType));
 
@@ -106,17 +108,21 @@ namespace RAA_Module2_Skills
             {
                 if (wallType.Name == wallName)
                 {
-                    return wallType;
-                }
-                else
-                {
-                    return null;
+                    returnValue = wallType;
+                    return returnValue;
                 }
             }
+            if (returnValue == null)
+            {
+                returnValue = wallTypes.FirstElement() as WallType;
+            }
+            return returnValue;
         }
 
         internal PipeType GetPipeTypeByName(Document doc, string pipeName)
         {
+            PipeType returnValue = null;
+            
             FilteredElementCollector pipeTypes = new FilteredElementCollector(doc);
             pipeTypes.OfClass(typeof(PipeType));
 
@@ -124,13 +130,21 @@ namespace RAA_Module2_Skills
             {
                 if (pipeType.Name == pipeName)
                 {
-                    return pipeType;
+                    returnValue = pipeType;
+                    return returnValue;
                 }
             }
+            if (returnValue == null)
+            {
+                returnValue = pipeTypes.FirstElement() as PipeType;
+            }
+            return returnValue;
         }
 
         internal DuctType GetDuctTypeByName(Document doc, string ductName)
         {
+            DuctType returnValue = null;
+            
             FilteredElementCollector ductTypes = new FilteredElementCollector(doc);
             ductTypes.OfClass(typeof(DuctType));
 
@@ -138,17 +152,22 @@ namespace RAA_Module2_Skills
             {
                 if (ductType.Name == ductName)
                 {
-                    return ductType;
-                }
-                else
-                {
-                    return null;
+                    returnValue = ductType;
+                    return returnValue;
                 }
             }
+            if (returnValue == null)
+            {
+                returnValue = ductTypes.FirstElement() as DuctType;
+            }
+
+            return returnValue;
         }
 
         internal MEPSystemType GetMEPSystemTypeByName(Document doc, string mepSystemName)
         {
+            MEPSystemType returnValue = null;
+            
             FilteredElementCollector mepSystems = new FilteredElementCollector(doc);
             mepSystems.OfClass(typeof(MEPSystemType));
 
@@ -156,15 +175,21 @@ namespace RAA_Module2_Skills
             {
                 if (mepSystem.Name == mepSystemName)
                 {
-                    return mepSystem;
+                    returnValue = mepSystem;
+                    return returnValue;
                 }
             }
-
-            return null;
+            if (returnValue == null)
+            {
+                returnValue = mepSystems.FirstElement() as MEPSystemType;
+            }
+            return returnValue;
         }
 
         internal Level GetLevelByName(Document doc, string levelName)
         {
+            Level returnValue = null;
+
             FilteredElementCollector allLevels = new FilteredElementCollector(doc);
             allLevels.OfClass(typeof(Level));
 
@@ -172,11 +197,16 @@ namespace RAA_Module2_Skills
             {
                 if (level.Name == levelName)
                 {
-                    return level;
+                    returnValue = level;
+                    return returnValue;
                 }
             }
+            if (levelName == null)
+            {
+                returnValue = allLevels.FirstElement() as Level;
+            }
 
-            return null;
+            return returnValue;
         }
 
 

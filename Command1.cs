@@ -1,11 +1,10 @@
 ﻿using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Plumbing;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace RAA_Module2_Skills
 {
     [Transaction(TransactionMode.Manual)]
-    public class Command1 : IExternalCommand
+    public class Module2Command : IExternalCommand
     {
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -63,29 +62,34 @@ namespace RAA_Module2_Skills
                 foreach (CurveElement currentCurve in modelCurves)
                 {
                     Curve curve = currentCurve.GeometryCurve;
-                    XYZ startPoint = curve.GetEndPoint(0);
-                    XYZ endPoint = curve.GetEndPoint(1);
-                    startPoints.Add(startPoint);
-                    endPoints.Add(endPoint);
 
-                    GraphicsStyle currentStyle = (GraphicsStyle)currentCurve.LineStyle;
-
+                    if (curve.IsBound == true)
                     {
-                        switch (currentStyle.Name)
-                        {
-                            case "A-GLAZ":
-                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Storefront wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
-                                break;
-                            case "A-WALL":
-                                Wall.Create(doc, curve, GetWallTypeByName(doc, "Generic 8 wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
-                                break;
-                            case "M-DUCT":
-                                Duct.Create(doc, GetMEPSystemTypeByName(doc, "Supply Air").Id, GetDuctTypeByName(doc, "Default Duct").Id, GetLevelByName(doc, "Level 1").Id, startPoint, endPoint);
-                                break;
-                            case "P-PIPE":
-                                Pipe.Create(doc, GetMEPSystemTypeByName(doc, "Other").Id, GetPipeTypeByName(doc, "Default Pipe").Id, GetLevelByName(doc, "Level 1").Id, startPoint, endPoint);
-                                break;
 
+                        XYZ startPoint = curve.GetEndPoint(0);
+                        XYZ endPoint = curve.GetEndPoint(1);
+                        startPoints.Add(startPoint);
+                        endPoints.Add(endPoint);
+
+                        GraphicsStyle currentStyle = (GraphicsStyle)currentCurve.LineStyle;
+
+                        {
+                            switch (currentStyle.Name)
+                            {
+                                case "A-GLAZ":
+                                    Wall.Create(doc, curve, GetWallTypeByName(doc, "Storefront wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
+                                    break;
+                                case "A-WALL":
+                                    Wall.Create(doc, curve, GetWallTypeByName(doc, "Generic 8 wall").Id, GetLevelByName(doc, "Level 1").Id, 10, 0, false, false);
+                                    break;
+                                case "M-DUCT":
+                                    Duct.Create(doc, GetMEPSystemTypeByName(doc, "Supply Air").Id, GetDuctTypeByName(doc, "Default Duct").Id, GetLevelByName(doc, "Level 1").Id, startPoint, endPoint);
+                                    break;
+                                case "P-PIPE":
+                                    Pipe.Create(doc, GetMEPSystemTypeByName(doc, "Other").Id, GetPipeTypeByName(doc, "Default Pipe").Id, GetLevelByName(doc, "Level 1").Id, startPoint, endPoint);
+                                    break;
+
+                            }
                         }
                     }
                 }
@@ -100,7 +104,7 @@ namespace RAA_Module2_Skills
                                             string wallName)
         {
             WallType returnValue = null;
-            
+
             FilteredElementCollector wallTypes = new FilteredElementCollector(doc);
             wallTypes.OfClass(typeof(WallType));
 
@@ -122,7 +126,7 @@ namespace RAA_Module2_Skills
         internal PipeType GetPipeTypeByName(Document doc, string pipeName)
         {
             PipeType returnValue = null;
-            
+
             FilteredElementCollector pipeTypes = new FilteredElementCollector(doc);
             pipeTypes.OfClass(typeof(PipeType));
 
@@ -144,7 +148,7 @@ namespace RAA_Module2_Skills
         internal DuctType GetDuctTypeByName(Document doc, string ductName)
         {
             DuctType returnValue = null;
-            
+
             FilteredElementCollector ductTypes = new FilteredElementCollector(doc);
             ductTypes.OfClass(typeof(DuctType));
 
@@ -167,7 +171,7 @@ namespace RAA_Module2_Skills
         internal MEPSystemType GetMEPSystemTypeByName(Document doc, string mepSystemName)
         {
             MEPSystemType returnValue = null;
-            
+
             FilteredElementCollector mepSystems = new FilteredElementCollector(doc);
             mepSystems.OfClass(typeof(MEPSystemType));
 

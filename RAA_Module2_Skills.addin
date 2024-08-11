@@ -1,29 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
   <AddIn Type="Command">
-    <Text>RAA_Module2_Skills - Command 1</Text>
-    <Description>Some description</Description>
+    <Text>RAA_Module2_Skills - Module2Command</Text>
+    <Description>Solution for Module 2 Skills Challenge</Description>
     <Assembly>RAA_Module2_Skills\RAA_Module2_Skills.dll</Assembly>
-    <FullClassName>RAA_Module2_Skills.Command1</FullClassName>
+    <FullClassName>RAA_Module2_Skills.Module2Command</FullClassName>
     <ClientId>78e273f1-9621-4fa1-890b-5d307ab10e60</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
-  </AddIn>
-  <AddIn Type="Command">
-    <Text>RAA_Module2_Skills - Command 2</Text>
-    <Description>Some description</Description>
-    <Assembly>RAA_Module2_Skills\RAA_Module2_Skills.dll</Assembly>
-    <FullClassName>RAA_Module2_Skills.Command2</FullClassName>
-    <ClientId>e526d8dc-cf50-4055-a480-ffb8cfca1186</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+    <VendorId>James McKinnon</VendorId>
+    <VendorDescription>James McKinnon</VendorDescription>
   </AddIn>
   <AddIn Type="Application">
     <Name>RAA_Module2_Skills</Name>
     <Assembly>RAA_Module2_Skills\RAA_Module2_Skills.dll</Assembly>
     <FullClassName>RAA_Module2_Skills.App</FullClassName>
     <ClientId>e5865f17-998f-4fb5-83c7-4ae193369a86</ClientId>
-    <VendorId>com.YOUR COMPANY NAME</VendorId>
-    <VendorDescription>YOUR COMPANY NAME, YOUR COMPANY URL</VendorDescription>
+    <VendorId>James McKinnon</VendorId>
+    <VendorDescription>James McKinnon</VendorDescription>
   </AddIn>
 </RevitAddIns>
